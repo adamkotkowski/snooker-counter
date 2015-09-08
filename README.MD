@@ -3,8 +3,10 @@
 **used in android app :** <https://play.google.com/store/apps/details?id=com.advanetsystems.snooker&hl=en><br>
 **and a web page:** <http://snookerscore.com><br>
 
-### What is it ###
-This is a Java library to keep track of snooker matches. Main features:
+### What is it? ###
+This is a Java library to keep track of snooker matches. It can be used in snooker games, snooker tracking apps and live scoring apps.
+
+Main features:
 
 - Keeps track of a whole match
 - Keep the game in line with the rules - handles al the snooker rules (free ball, multiple reds, etc...)
@@ -13,7 +15,7 @@ This is a Java library to keep track of snooker matches. Main features:
 - Provides points behind/on the table
 - ability to undo every event (even between frames)
 - ability to interact with the game - listen to game events
-- put custom model data which the engine will be operating
+- put custom model data which the engine will be operating on
 
 ### How to use ###
 
