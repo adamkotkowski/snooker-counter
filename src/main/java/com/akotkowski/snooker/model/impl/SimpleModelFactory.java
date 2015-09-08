@@ -29,11 +29,6 @@ public class SimpleModelFactory implements ModelFactory {
     }
 
     @Override
-    public void removeMatch(MatchModel match) {
-        // to be handled if necessary - ex. delete entity from DB
-    }
-
-    @Override
     public void removeFrameEvent(FrameEventModel frameEvent) {
         // to be handled if necessary - ex. delete entity from DB
     }

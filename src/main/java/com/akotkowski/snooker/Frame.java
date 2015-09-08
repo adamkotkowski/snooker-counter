@@ -359,12 +359,6 @@ public class Frame implements Serializable {
         return this.getlastEvent().getScore();
     }
 
-    public List<Ball> getCurrentBreakBalls(Player player) {
-        if (this.getlastEvent() == null || this.getlastEvent().getType() != FrameEventModel.Type.BREAK || !this.getlastEvent().isOpen() || this.getlastEvent().getPlayerScored() != player)
-            return null;
-        return this.getlastEvent().getBallsPotted();
-    }
-
     public boolean undo() {
         if (this.getFrame().isCompleted()) {
             this.getFrame().setCompleted(false);
@@ -374,11 +368,10 @@ public class Frame implements Serializable {
                 if (this.getlastEvent().getType() == FrameEventModel.Type.BREAK) {
                     if (this.getlastEvent().isOpen()) {
                         Ball ball = FrameEventHelper.removeLastPot(this.getlastEvent());
-                        if (this.getlastEvent().getBallsPotted() == null || this.getlastEvent().getBallsPotted().equals("")) {
+                        if (this.getlastEvent().getBallsPotted() == null || this.getlastEvent().getBallsPotted().isEmpty()) {
                             FrameEventModel toDelete = this.getlastEvent();
-                            this.getFrame().getFrameEvents().remove(this.getFrame().getFrameEvents().size() - 1);
                             modelFactory.removeFrameEvent(this.getlastEvent());
-                            toDelete = this.getlastEvent();
+                            this.getFrame().getFrameEvents().remove(this.getFrame().getFrameEvents().size() - 1);
 
                         }
                         if (ball == Ball.RED) {

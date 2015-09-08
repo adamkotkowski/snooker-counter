@@ -14,20 +14,32 @@ public class Match {
     private Frame currentFrame = null;
     private MatchEventListener listener;
     private MatchModel match;
-    private ModelFactory modelFactory = new SimpleModelFactory();
+    private final ModelFactory modelFactory;
 
-    public Match(int frameCount) {
+
+    public Match(int frameCount, ModelFactory modelFactory) {
+        this.modelFactory = modelFactory;
         this.match = modelFactory.createMatch();
         init(frameCount);
     }
 
-    public Match(int frameCount, MatchModel match2) {
-        this.match = match2;
+    public Match(int frameCount) {
+        this.modelFactory = new SimpleModelFactory();
+        this.match = modelFactory.createMatch();
         init(frameCount);
     }
 
-    public Match(MatchModel match2) {
+    public Match(int frameCount, MatchModel match2, ModelFactory modelFactory) {
+        this.modelFactory = modelFactory;
         this.match = match2;
+        init(frameCount);
+    }
+    public Match(MatchModel match){
+        this(match, new SimpleModelFactory());
+    }
+    public Match(MatchModel match, ModelFactory modelFactory) {
+        this.modelFactory = modelFactory;
+        this.match = match;
         this.init(match.getFrameCount());
         for (final FrameModel frame : match.getFrames()) {
             if (!frame.isCompleted()) {
@@ -194,14 +206,6 @@ public class Match {
 
     public void setMatch(MatchModel match) {
         this.match = match;
-    }
-
-    public ModelFactory getModelFactory() {
-        return modelFactory;
-    }
-
-    public void setModelFactory(ModelFactory _domainFactory) {
-        modelFactory = _domainFactory;
     }
 
     public boolean undo(int n) {

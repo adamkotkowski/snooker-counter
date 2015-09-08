@@ -9,7 +9,5 @@ public interface ModelFactory {
 
     void removeFrame(FrameModel frame);
 
-    void removeMatch(MatchModel match);
-
     void removeFrameEvent(FrameEventModel frameEvent);
 }
