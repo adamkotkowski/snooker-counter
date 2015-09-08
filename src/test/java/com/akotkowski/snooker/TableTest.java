@@ -8,10 +8,9 @@ public class TableTest {
     Match match;
 
     @Before
-    public void setup(){
+    public void setup() {
         match = new MatchBuilder().frames(1).build();
     }
-
 
 
 }

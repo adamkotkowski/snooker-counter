@@ -261,4 +261,7 @@ public class Match {
         return this.getMatch().getFrames().get(nmb);
     }
 
+    public void registerMiss() {
+        this.getCurrentFrame().registerMiss();
+    }
 }
