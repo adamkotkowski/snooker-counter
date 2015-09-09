@@ -1,5 +1,6 @@
 package com.akotkowski.snooker;
 
+import com.akotkowski.snooker.model.MatchModel;
 import com.akotkowski.snooker.model.ModelFactory;
 import com.akotkowski.snooker.model.Player;
 
@@ -8,11 +9,13 @@ public class MatchBuilder {
 
     int frames = 1;
 
-    String player1 = "player 1";
+    private String player1 = "player 1";
 
-    String player2 = "player 2";
+    private String player2 = "player 2";
 
-    ModelFactory modelFactory;
+    private ModelFactory modelFactory;
+
+    private MatchModel matchModel;
 
     public MatchBuilder frames(int frames) {
         this.frames = frames;
@@ -29,16 +32,22 @@ public class MatchBuilder {
         return this;
     }
 
+    public MatchBuilder matchModel(MatchModel matchModel) {
+        this.matchModel = matchModel;
+        return this;
+    }
+
     public Match build() {
         Match match;
         if(modelFactory!=null){
-            match = new Match(frames, modelFactory);
+            match = matchModel!=null? new Match(matchModel, modelFactory) : new Match(frames, modelFactory);
         }else{
-            match = new Match(frames);
+            match = matchModel!=null? new Match(matchModel) :new Match(frames);
         }
-
-        match.setPlayer(Player.ONE, player1);
-        match.setPlayer(Player.TWO, player2);
+        if(matchModel==null){
+            match.setPlayer(Player.ONE, player1);
+            match.setPlayer(Player.TWO, player2);
+        }
         return match;
     }
 

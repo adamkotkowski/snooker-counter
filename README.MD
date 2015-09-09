@@ -46,8 +46,27 @@ Simple usage
         System.out.println("Current break: " + match.getCurrentFrame().getCurrentBreak(Player.TWO));
         System.out.println("Current scores: " + match.getCurrentFrame().getResult(Player.ONE)+" : "+match.getCurrentFrame().getResult(Player.TWO));
 
+        // ups, my mistake..
+        match.undo();
+
+        System.out.println("Current break: " + match.getCurrentFrame().getCurrentBreak(Player.TWO));  // brake is still open
+
         match.surrenderFrame(Player.ONE);
         System.out.println("Frame scores: " + match.getResult(Player.ONE) + " : " + match.getResult(Player.TWO));
+```
+You can get current pot possibilities (to for example show correct GUI)
+```
+        PotPossibilities possibilities = match.getCurrentPotPossibilities(Player.ONE);
+```
+
+You can get model object at any time:
+```
+        MatchModel matchModel = match.getMatch();
+```
+
+And for example save it to DB. After that, the game can be restored:
+```
+        Match match = new MatchBuilder().matchModel(matchModel).build();
 ```
 
 Usage of all features you can find in jUnit tests.
