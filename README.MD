@@ -54,19 +54,14 @@ Simple usage
         match.surrenderFrame(Player.ONE);
         System.out.println("Frame scores: " + match.getResult(Player.ONE) + " : " + match.getResult(Player.TWO));
 ```
+
 You can get current pot possibilities (to for example show correct GUI)
-```
-        PotPossibilities possibilities = match.getCurrentPotPossibilities(Player.ONE);
-```
+`PotPossibilities possibilities = match.getCurrentPotPossibilities(Player.ONE);`
 
 You can get model object at any time:
-```
-        MatchModel matchModel = match.getMatch();
-```
+`MatchModel matchModel = match.getMatch();`
 
 And for example save it to DB. After that, the game can be restored:
-```
-        Match match = new MatchBuilder().matchModel(matchModel).build();
-```
+`Match match = new MatchBuilder().matchModel(matchModel).build();`
 
 Usage of all features you can find in jUnit tests.
