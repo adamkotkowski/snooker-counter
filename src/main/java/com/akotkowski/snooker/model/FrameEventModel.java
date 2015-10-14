@@ -27,11 +27,6 @@ public interface FrameEventModel {
 
     }
 
-
-    Long getId();
-
-    void setId(Long id);
-
     Type getType();
 
     void setType(Type type);
@@ -57,10 +52,6 @@ public interface FrameEventModel {
 
     void setOpen(boolean _open);
 
-    void setFreeBall(boolean freeBall);
-
-    boolean isFreeBall();
-
     int getFreeBallScore();
 
     void setFreeBallScore(int freeBall);
@@ -73,13 +64,6 @@ public interface FrameEventModel {
 
     void setInColors(boolean inColors);
 
-    FrameModel getFrame();
-
     void setFrame(FrameModel frame);
-
-
-    boolean isResignFrame();
-
-    boolean isResignMatch();
 
 }

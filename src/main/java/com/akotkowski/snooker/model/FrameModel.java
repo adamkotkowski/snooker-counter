@@ -19,11 +19,5 @@ public interface FrameModel {
 
     List<? extends FrameEventModel> getFrameEvents();
 
-    MatchModel getMatch();
-
     void setMatch(MatchModel match);
-
-    Long getId();
-
-    void setId(Long id);
 }

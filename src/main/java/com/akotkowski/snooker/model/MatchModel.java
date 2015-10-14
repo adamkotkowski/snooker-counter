@@ -31,26 +31,12 @@ public interface MatchModel {
 
     List<? extends FrameModel> getFrames();
 
-    void setFrames(List<? extends FrameModel> list);
-
     Date getDate();
 
     void setDate(Date date);
 
-    int getCurrentBreak();
-
-    Long getId();
-
-    void setId(Long id);
-
-    void setCurrentBreak(int currentBreak);
-
     boolean isStarted();
 
     void setStarted(boolean started);
-
-    int getReds();
-
-    void setReds(int reds);
 
 }

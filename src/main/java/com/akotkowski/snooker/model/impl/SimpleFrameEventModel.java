@@ -11,8 +11,6 @@ import java.util.List;
 
 public class SimpleFrameEventModel implements FrameEventModel {
 
-    Long id;
-
     FrameModel frame;
 
     Type type;
@@ -35,26 +33,7 @@ public class SimpleFrameEventModel implements FrameEventModel {
 
     Date date;
 
-    boolean resignFrame;
-
-    boolean resignMatch;
-
     long shotTime;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public FrameModel getFrame() {
-        return frame;
-    }
 
     @Override
     public void setFrame(FrameModel frameModel) {
@@ -131,16 +110,6 @@ public class SimpleFrameEventModel implements FrameEventModel {
     }
 
     @Override
-    public boolean isFreeBall() {
-        return freeBall;
-    }
-
-    @Override
-    public void setFreeBall(boolean freeBall) {
-        this.freeBall = freeBall;
-    }
-
-    @Override
     public boolean isInColors() {
         return inColors;
     }
@@ -161,20 +130,6 @@ public class SimpleFrameEventModel implements FrameEventModel {
     }
 
     @Override
-    public boolean isResignFrame() {
-        return resignFrame;
-    }
-
-    public void setResignFrame(boolean resignFrame) {
-        this.resignFrame = resignFrame;
-    }
-
-    @Override
-    public boolean isResignMatch() {
-        return resignMatch;
-    }
-
-    @Override
     public long getShotTime() {
         return shotTime;
     }
@@ -184,7 +139,20 @@ public class SimpleFrameEventModel implements FrameEventModel {
         this.shotTime = shotTime;
     }
 
-    public void setResignMatch(boolean resignMatch) {
-        this.resignMatch = resignMatch;
+    @Override
+    public String toString() {
+        return "SimpleFrameEventModel{" +
+                ", type=" + type +
+                ", playerScored=" + playerScored +
+                ", score=" + score +
+                ", ballsPottedCount=" + ballsPottedCount +
+                ", open=" + open +
+                ", ballsPotted=" + ballsPotted +
+                ", freeBallScore=" + freeBallScore +
+                ", freeBall=" + freeBall +
+                ", inColors=" + inColors +
+                ", date=" + date +
+                ", shotTime=" + shotTime +
+                '}';
     }
 }

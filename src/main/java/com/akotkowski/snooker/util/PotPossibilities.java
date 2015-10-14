@@ -42,4 +42,11 @@ public class PotPossibilities implements Serializable {
         this.ballType = ballType;
     }
 
+    @Override
+    public String toString() {
+        return "PotPossibilities{" +
+                "leastBall=" + leastBall +
+                ", ballType=" + ballType +
+                '}';
+    }
 }

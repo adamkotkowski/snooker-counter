@@ -8,6 +8,7 @@ import com.akotkowski.snooker.model.ModelFactory;
 import com.akotkowski.snooker.model.Player;
 import com.akotkowski.snooker.model.impl.SimpleModelFactory;
 import com.akotkowski.snooker.util.PotPossibilities;
+import com.akotkowski.snooker.util.Util;
 
 import java.io.Serializable;
 import java.util.*;
@@ -40,7 +41,7 @@ public class Frame implements Serializable {
                 if (fe.getBallsPotted() != null) {
                     int i = 0;
                     for (Ball ball : fe.getBallsPotted()) {
-                        if (i == 0 && fe.isFreeBall())
+                        if (i == 0 && FrameEventHelper.isFreeBall(fe))
                             continue;
                         this.table.pot(ball);
                         i++;
@@ -235,10 +236,10 @@ public class Frame implements Serializable {
     private void recalculateScore() {
         Map<Player, Integer> results = new HashMap<Player, Integer>();
         for (FrameEventModel e : this.getFrame().getFrameEvents()) {
-            results.put(e.getPlayerScored(), results.getOrDefault(e.getPlayerScored(), 0) + e.getScore());
+            results.put(e.getPlayerScored(), Util.getOrDefault(results, e.getPlayerScored(), 0) + e.getScore());
         }
-        this.getFrame().setResult(Player.ONE, results.getOrDefault(Player.ONE, 0));
-        this.getFrame().setResult(Player.TWO, results.getOrDefault(Player.TWO, 0));
+        this.getFrame().setResult(Player.ONE, Util.getOrDefault(results, Player.ONE, 0));
+        this.getFrame().setResult(Player.TWO, Util.getOrDefault(results, Player.TWO, 0));
     }
 
     public Table getTable() {
@@ -301,21 +302,21 @@ public class Frame implements Serializable {
         FrameEventModel ev = this.getlastEvent();
         if (ev != null && ev.getType() == FrameEventModel.Type.BREAK) {
             if (ev.getPlayerScored() == player) {
-                if (ev.isFreeBall() && ev.getBallsPottedCount() == 1) {
+                if (FrameEventHelper.isFreeBall(ev) && ev.getBallsPottedCount() == 1) {
                     if (table.getReds() > 0) {
                         return PotPossibilities.COLOR;
                     } else {
                         return new PotPossibilities(this.table.getColorRemained());
                     }
                 }
-
+                Ball lastPot = FrameEventHelper.getLastPot(ev);
                 if (ev.isOpen() && ev.isInColors() &&
                         this.table.getReds() == 0 &&
-                        FrameEventHelper.getLastPot(ev).getType() == Ball.Type.COLOR) {
+                        lastPot!=null && lastPot.getType() == Ball.Type.COLOR) {
                     return new PotPossibilities(this.table.getColorRemained());
-                } else if (FrameEventHelper.isOpen(ev) && FrameEventHelper.getLastPot(ev).getType() == Ball.Type.COLOR && !(ev.getScore() == 1 && ev.isFreeBall())) {
+                } else if (FrameEventHelper.isOpen(ev) && lastPot!=null && lastPot.getType() == Ball.Type.COLOR && !(ev.getScore() == 1 && FrameEventHelper.isFreeBall(ev))) {
                     return PotPossibilities.RED;
-                } else if (FrameEventHelper.isOpen(ev) && (FrameEventHelper.getLastPot(ev).getType() == Ball.Type.RED || (ev.getScore() == 1 && ev.isFreeBall()))) {
+                } else if (FrameEventHelper.isOpen(ev) && (lastPot!=null && lastPot.getType() == Ball.Type.RED || (ev.getScore() == 1 && FrameEventHelper.isFreeBall(ev)))) {
                     return PotPossibilities.COLOR;
                 } else if (!FrameEventHelper.isOpen(ev) && this.table.getReds() == 0) {
                     return new PotPossibilities(this.table.getColorRemained());
@@ -337,10 +338,11 @@ public class Frame implements Serializable {
     public int getRemaining() {
         int ret = this.table.getReds() * 8;
         Ball lastPotted = null;
-        if (this.getlastEvent().getBallsPotted().size() > 0) {
+        FrameEventModel lastEvent = this.getlastEvent();
+        if (lastEvent != null && lastEvent.getBallsPotted().size() > 0) {
             lastPotted = this.getlastEvent().getBallsPotted().get(this.getlastEvent().getBallsPotted().size() - 1);
         }
-        if (this.getlastEvent() != null && this.getlastEvent().getType() == FrameEventModel.Type.BREAK && this.getlastEvent().isOpen() && lastPotted == Ball.RED)
+        if (lastEvent != null && lastEvent.getType() == FrameEventModel.Type.BREAK && this.getlastEvent().isOpen() && lastPotted == Ball.RED)
             ret += 7;
         if (ret > 0) {
             ret += 27;
@@ -405,5 +407,13 @@ public class Frame implements Serializable {
 
     public void setFrame(FrameModel frame) {
         this.frameModel = frame;
+    }
+
+    public List<Ball> getCurrentBreakBalls(Player player) {
+        FrameEventModel fem = getlastEvent();
+        if (fem != null && fem.getPlayerScored() == player && fem.getType() == FrameEventModel.Type.BREAK && fem.isOpen())
+            return fem.getBallsPotted();
+
+        return new ArrayList<Ball>();
     }
 }

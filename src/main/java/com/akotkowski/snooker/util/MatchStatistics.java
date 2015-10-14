@@ -32,6 +32,10 @@ public class MatchStatistics implements Serializable {
         if (player == Player.TWO) return player2;
         return null;
     }
+    public HighestBreakPlayer getHighestBreak() {
+        Player player = getPlayer(Player.ONE).getHighestBreak()>=getPlayer(Player.TWO).getHighestBreak()? Player.ONE:Player.TWO;
+        return new HighestBreakPlayer(player, getPlayer(player).highestBreak);
+    }
 
     public class PlayerMatchStatistics implements Serializable {
         private static final long serialVersionUID = 3361161862844895059L;
@@ -112,9 +116,6 @@ public class MatchStatistics implements Serializable {
             this.pots++;
             this.points += score;
         }
-//		public void addPoints(int score) {
-//			this.points+=score;
-//		}
 
         public int getBreaksMore10() {
             return breaksMore10;
@@ -167,4 +168,21 @@ public class MatchStatistics implements Serializable {
 
     }
 
+    public class HighestBreakPlayer {
+        private final Player player;
+        private final int highestBreak;
+
+        public HighestBreakPlayer(Player player, int highestBreak) {
+            this.player = player;
+            this.highestBreak = highestBreak;
+        }
+
+        public Player getPlayer() {
+            return player;
+        }
+
+        public int getHighestBreak() {
+            return highestBreak;
+        }
+    }
 }

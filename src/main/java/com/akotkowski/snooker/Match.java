@@ -1,8 +1,9 @@
 package com.akotkowski.snooker;
 
+import com.akotkowski.snooker.model.*;
 import com.akotkowski.snooker.model.impl.SimpleModelFactory;
 import com.akotkowski.snooker.util.PotPossibilities;
-import com.akotkowski.snooker.model.*;
+import com.akotkowski.snooker.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,9 +35,11 @@ public class Match {
         this.match = match2;
         init(frameCount);
     }
-    public Match(MatchModel match){
+
+    public Match(MatchModel match) {
         this(match, new SimpleModelFactory());
     }
+
     public Match(MatchModel match, ModelFactory modelFactory) {
         this.modelFactory = modelFactory;
         this.match = match;
@@ -76,23 +79,23 @@ public class Match {
 
         for (FrameModel frame : match.getFrames()) {
             if (frame.isCompleted())
-                results.put(frame.getWinner(), results.getOrDefault(frame.getWinner(), 0) + 1);
+                results.put(frame.getWinner(), Util.getOrDefault(results, frame.getWinner(), 0) + 1);
         }
-        if (results.getOrDefault(Player.ONE, 0) > results.getOrDefault(Player.TWO, 0)) {
-            if (results.getOrDefault(Player.ONE, 0) >= match.getMaxResult()) {
+        if (Util.getOrDefault(results, Player.ONE, 0) > Util.getOrDefault(results, Player.TWO, 0)) {
+            if (Util.getOrDefault(results, Player.ONE, 0) >= match.getMaxResult()) {
                 match.setWinner(Player.ONE);
                 match.setCompleted(true);
 
             }
         } else {
-            if (results.getOrDefault(Player.TWO, 0) >= match.getMaxResult()) {
+            if (Util.getOrDefault(results, Player.TWO, 0) >= match.getMaxResult()) {
                 match.setWinner(Player.TWO);
                 match.setCompleted(true);
 
             }
         }
-        match.setResult(Player.ONE, results.getOrDefault(Player.ONE, 0));
-        match.setResult(Player.TWO, results.getOrDefault(Player.TWO, 0));
+        match.setResult(Player.ONE, Util.getOrDefault(results, Player.ONE, 0));
+        match.setResult(Player.TWO, Util.getOrDefault(results, Player.TWO, 0));
     }
 
     public Frame getCurrentFrame() {

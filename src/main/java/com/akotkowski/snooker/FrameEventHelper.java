@@ -10,7 +10,7 @@ public class FrameEventHelper implements Serializable {
     public static int pot(FrameEventModel fe, Ball ball) {
         Ball last = FrameEventHelper.getLastPot(fe);
         if (last != null && last.getType() == Ball.Type.COLOR && ball.getType() == Ball.Type.COLOR) {
-            if (!(fe.isFreeBall() && fe.getBallsPotted().size() < 2)) {
+            if (!(isFreeBall(fe) && fe.getBallsPotted().size() < 2)) {
                 if (!fe.isInColors())
                     throw new IllegalBallPotted(ball, "Illegal ball potted - COLOR after COLOR when still reds on the table");
             }
@@ -61,4 +61,13 @@ public class FrameEventHelper implements Serializable {
         event.getBallsPotted().remove(size - 1);
         return ret;
     }
+
+    public static boolean isFreeBall(FrameEventModel fe) {
+        return fe.getFreeBallScore()!=0;
+    }
+    public static boolean isBreak(FrameEventModel fe){ return fe.getType()== FrameEventModel.Type.BREAK; }
+    public static boolean isFoul(FrameEventModel fe){ return fe.getType()== FrameEventModel.Type.FOUL; }
+    public static boolean isResignFrame(FrameEventModel fe){ return fe.getType()== FrameEventModel.Type.FRAME_SURRENDER; }
+    public static boolean isResignMatch(FrameEventModel fe){ return fe.getType()== FrameEventModel.Type.MATCH_SURRENDER; }
+
 }

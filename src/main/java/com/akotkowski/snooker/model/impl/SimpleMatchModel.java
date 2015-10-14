@@ -5,12 +5,11 @@ import com.akotkowski.snooker.model.MatchModel;
 import com.akotkowski.snooker.model.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class SimpleMatchModel implements MatchModel {
-
-    Long id;
 
     int[] results = new int[2];
 
@@ -28,22 +27,7 @@ public class SimpleMatchModel implements MatchModel {
 
     Date date;
 
-    int currentBreak;
-
     boolean started;
-
-    int reds;
-
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int getResult(Player player) {
@@ -110,11 +94,6 @@ public class SimpleMatchModel implements MatchModel {
     }
 
     @Override
-    public void setFrames(List<? extends FrameModel> frames) {
-        this.frames = frames;
-    }
-
-    @Override
     public Date getDate() {
         return date;
     }
@@ -122,16 +101,6 @@ public class SimpleMatchModel implements MatchModel {
     @Override
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Override
-    public int getCurrentBreak() {
-        return currentBreak;
-    }
-
-    @Override
-    public void setCurrentBreak(int currentBreak) {
-        this.currentBreak = currentBreak;
     }
 
     @Override
@@ -145,13 +114,17 @@ public class SimpleMatchModel implements MatchModel {
     }
 
     @Override
-    public int getReds() {
-        return reds;
+    public String toString() {
+        return "SimpleMatchModel{" +
+                "results=" + Arrays.toString(results) +
+                ", players=" + Arrays.toString(players) +
+                ", maxResult=" + maxResult +
+                ", FrameCount=" + FrameCount +
+                ", winner=" + winner +
+                ", completed=" + completed +
+                ", frames=" + frames +
+                ", date=" + date +
+                ", started=" + started +
+                '}';
     }
-
-    @Override
-    public void setReds(int reds) {
-        this.reds = reds;
-    }
-
 }

@@ -19,4 +19,8 @@ public enum Player {
     public Player getOponent() {
         return this == ONE ? TWO : ONE;
     }
+
+    public static Player valueOf(int i) {
+        return i == 0 ? ONE : TWO;
+    }
 }
