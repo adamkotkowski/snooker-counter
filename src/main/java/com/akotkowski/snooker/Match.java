@@ -128,9 +128,8 @@ public class Match {
     }
 
     public void onFrameCompleted() {
-        boolean endedTemp = match.isCompleted();
         this.recountFrames();
-        if (endedTemp == false && match.isCompleted() == true) {
+        if (match.isCompleted() == true) {
             if (this.listener != null)
                 this.listener.matchEnded(this);
         } else {
