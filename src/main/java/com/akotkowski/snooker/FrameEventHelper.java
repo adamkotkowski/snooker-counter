@@ -59,6 +59,7 @@ public class FrameEventHelper implements Serializable {
         if (size == 0) return null;
         Ball ret = event.getBallsPotted().get(size - 1);
         event.getBallsPotted().remove(size - 1);
+        event.setScore(event.getScore()-ret.getValue());
         return ret;
     }
 
