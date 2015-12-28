@@ -6,12 +6,10 @@ import com.akotkowski.snooker.model.MatchModel;
 
 public class MatchStatisticsProcessor {
     public static MatchStatistics calculateStatistics(MatchModel match) {
-        return calculateStatistics(match, new MatchStatistics(match));
+        return calculateStatistics(match, new MatchStatistics());
     }
 
     public static MatchStatistics calculateStatistics(MatchModel match, MatchStatistics stats) {
-        stats.setMatch(match);
-
         for (FrameModel frame : match.getFrames()) {
             calculateStatistics(frame, stats);
         }

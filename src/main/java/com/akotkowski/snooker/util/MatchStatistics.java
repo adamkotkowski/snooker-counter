@@ -8,23 +8,13 @@ import java.util.ArrayList;
 
 public class MatchStatistics implements Serializable {
     private static final long serialVersionUID = 1L;
-    private MatchModel match;
     PlayerMatchStatistics player1;
     PlayerMatchStatistics player2;
 
 
-    MatchStatistics(MatchModel match) {
-        this.match = match;
+    public MatchStatistics() {
         player1 = new PlayerMatchStatistics();
         player2 = new PlayerMatchStatistics();
-    }
-
-    public MatchModel getMatch() {
-        return match;
-    }
-
-    public void setMatch(MatchModel match) {
-        this.match = match;
     }
 
     public PlayerMatchStatistics getPlayer(Player player) {
