@@ -5,10 +5,7 @@ import com.akotkowski.snooker.model.impl.SimpleModelFactory;
 import com.akotkowski.snooker.util.PotPossibilities;
 import com.akotkowski.snooker.util.Util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Match {
 
@@ -146,20 +143,13 @@ public class Match {
             List<FrameEventModel> brakeInFrame = Frame.getBreaks(frame);
             ret.addAll(brakeInFrame);
         }
-        // BUBBLE sort :)
-        // TODO: improve
-        List<FrameEventModel> ret1 = new ArrayList<FrameEventModel>();
-        while (!ret.isEmpty()) {
-            FrameEventModel best = ret.get(0);
-            for (FrameEventModel b : ret) {
-                if (b.getScore() > best.getScore()) {
-                    best = b;
-                }
+        Collections.sort(ret, new Comparator<FrameEventModel>() {
+            @Override
+            public int compare(FrameEventModel o1, FrameEventModel o2) {
+                return Integer.compare(o1.getScore(), o2.getScore());
             }
-            ret1.add(best);
-            ret.remove(best);
-        }
-        return ret1;
+        });
+        return ret;
     }
 
     public List<FrameEventModel> getEvents() {
