@@ -3,6 +3,8 @@ package com.akotkowski.snooker.util;
 import com.akotkowski.snooker.Ball;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PotPossibilities implements Serializable {
@@ -13,6 +15,7 @@ public class PotPossibilities implements Serializable {
 
     private Ball leastBall = null;
     private Ball.Type ballType = null;
+    private List<Ball> ballsPossible = new ArrayList<Ball>();
 
     public PotPossibilities() {
 
@@ -20,6 +23,9 @@ public class PotPossibilities implements Serializable {
 
     public PotPossibilities(Ball leastBall) {
         this.setLeastBall(leastBall);
+    }
+    public PotPossibilities(List<Ball> ballsPossible) {
+        this.ballsPossible = ballsPossible;
     }
 
     public PotPossibilities(Ball.Type ballType) {
@@ -40,6 +46,20 @@ public class PotPossibilities implements Serializable {
 
     public void setBallType(Ball.Type ballType) {
         this.ballType = ballType;
+    }
+
+    public boolean canBePotted(Ball ball){
+        if(ballType!=null){
+            if(ballType == Ball.Type.RED){
+                return ball == Ball.RED;
+            }else{
+               return ball.getType() == Ball.Type.COLOR;
+            }
+        }
+        if(getLeastBall()!=null){
+            return ball == getLeastBall();
+        }
+        return ballsPossible.contains(ball);
     }
 
     @Override

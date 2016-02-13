@@ -29,6 +29,8 @@ public class SimpleMatchModel implements MatchModel {
 
     boolean started;
 
+    private int reds;
+
     @Override
     public int getResult(Player player) {
         return results[player.getIndex()];
@@ -111,6 +113,16 @@ public class SimpleMatchModel implements MatchModel {
     @Override
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    @Override
+    public void setReds(int reds) {
+        this.reds = reds;
+    }
+
+    @Override
+    public int getReds() {
+        return this.reds;
     }
 
     @Override

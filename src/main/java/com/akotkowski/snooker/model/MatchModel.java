@@ -39,4 +39,7 @@ public interface MatchModel {
 
     void setStarted(boolean started);
 
+    void setReds(int reds);
+
+    int getReds();
 }

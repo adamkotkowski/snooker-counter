@@ -76,6 +76,7 @@ public class ModelFactoryTest {
     public void should_remove_frame_event(){
         MatchModel matchModel = new SimpleMatchModel();
         FrameModel frameModel = new SimpleFrameModel();
+        frameModel.setWinner(Player.ONE);
         FrameEventModel frameEventModel = new SimpleFrameEventModel();
 
         Mockito.when(modelFactory.createMatch()).thenReturn(matchModel);

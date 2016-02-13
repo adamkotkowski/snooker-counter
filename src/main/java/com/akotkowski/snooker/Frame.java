@@ -33,9 +33,23 @@ public class Frame implements Serializable {
         this(frameModel, new SimpleModelFactory());
     }
 
+    public Frame(FrameModel frameModel, ModelFactory modelFactory, Match match) {
+        setMatch(match);
+        this.modelFactory = modelFactory;
+        this.frameModel = frameModel;
+        init();
+    }
+
     public Frame(FrameModel frameModel, ModelFactory modelFactory) {
         this.modelFactory = modelFactory;
         this.frameModel = frameModel;
+        init();
+
+    }
+    private void init(){
+        if(frameModel!=null && getMatch()!=null){
+            this.table.setReds(getMatch().getMatch().getReds());
+        }
         for (FrameEventModel fe : this.getFrame().getFrameEvents()) {
             if (fe.getType() == FrameEventModel.Type.BREAK) {
                 if (fe.getBallsPotted() != null) {
@@ -378,7 +392,7 @@ public class Frame implements Serializable {
                         }
                         if (ball == Ball.RED) {
                             this.table.setReds(this.table.getReds() + 1);
-                        } else if (this.table.getReds() == 0 && this.table.getColorRemained().getValue() == ball.getValue() + 1) {
+                        } else if (this.table.getReds() == 0 && this.table.getColorRemained()!=null && this.table.getColorRemained().getValue() == ball.getValue() + 1) {
                             this.table.setColorRemained(ball);
                         } else if (this.table.getReds() == 0 && ball.getType() == Ball.Type.COLOR) {
                             this.getlastEvent().setInColors(false);

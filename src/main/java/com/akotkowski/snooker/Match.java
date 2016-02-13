@@ -43,8 +43,7 @@ public class Match {
         this.init(match.getFrameCount());
         for (final FrameModel frame : match.getFrames()) {
             if (!frame.isCompleted()) {
-                this.currentFrame = new Frame(frame, modelFactory);
-                currentFrame.setMatch(this);
+                this.currentFrame = new Frame(frame, modelFactory, this);
             }
         }
         this.recountFrames();
@@ -59,10 +58,8 @@ public class Match {
         List<FrameModel> l = (List<FrameModel>) match.getFrames();
         l.add(frame);
         frame.setMatch(match);
-        currentFrame = new Frame(frame, modelFactory);
+        currentFrame = new Frame(frame, modelFactory, this);
         frame.setMatch(match);
-        currentFrame.setMatch(this);
-        frame.setMatch(this.getMatch());
     }
 
     public void resignMatch(Player player) {
@@ -214,6 +211,11 @@ public class Match {
                 this.match.getFrames().remove(this.currentFrame.getFrame());
                 final FrameModel frame = this.match.getFrames().get(this.match.getFrames().size() - 1);
                 this.currentFrame = new Frame(frame);
+                this.currentFrame.setMatch(this);
+                Player player = this.getCurrentFrame().getFrame().getWinner();
+                if(player!=null) {
+                    getMatch().setResult(player, getMatch().getResult(player) - 1);
+                }
                 this.getCurrentFrame().undo();
             }
         } else {
@@ -255,5 +257,10 @@ public class Match {
 
     public void registerMiss() {
         this.getCurrentFrame().registerMiss();
+    }
+
+
+    public void setReds(int reds) {
+        this.getMatch().setReds(reds);
     }
 }

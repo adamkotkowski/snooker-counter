@@ -9,6 +9,8 @@ public class MatchBuilder {
 
     int frames = 1;
 
+    int reds = -1;
+
     private String player1 = "player 1";
 
     private String player2 = "player 2";
@@ -37,6 +39,11 @@ public class MatchBuilder {
         return this;
     }
 
+    public MatchBuilder reds(int reds){
+        this.reds = reds;
+        return this;
+    }
+
     public Match build() {
         Match match;
         if(modelFactory!=null){
@@ -47,6 +54,10 @@ public class MatchBuilder {
         if(matchModel==null){
             match.setPlayer(Player.ONE, player1);
             match.setPlayer(Player.TWO, player2);
+            match.setReds(15);
+        }
+        if(reds>0) {
+            match.setReds(reds);
         }
         return match;
     }

@@ -120,7 +120,7 @@ public class FramesTest {
         match.registerPot(Ball.YELLOW, Player.TWO);
 
         match.registerFaul(6, Player.ONE, 0);
-        match.registerFaul(5,Player.ONE,0);
+        match.registerFaul(5, Player.ONE, 0);
 
         match.registerPot(Ball.GREEN, Player.TWO);
         match.registerPot(Ball.BROWN, Player.TWO);
@@ -133,7 +133,18 @@ public class FramesTest {
         assertThat(match.getCurrentFrame().getFrame().isCompleted()).isFalse();
     }
 
+    @Test
+    public void shouldnt_start_with_given_reds_on_table(){
+        //given
+        int ballsCount = 10;
 
+        //when
+        match.setReds(ballsCount);
+        match.startNewFrame();
+        match.getCurrentFrame().registerPot(Ball.RED, Player.ONE);
 
+        //then
+        assertThat(match.getCurrentFrame().getTable().getReds()).isEqualTo(ballsCount - 1);
+    }
 
 }
